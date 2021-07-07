@@ -7,7 +7,7 @@ class FilmStudio(ABC):
     с которой подписан контракт.
     """
     @abstractmethod
-    def _create_film(self):
+    def _create_film(self) -> Film:
         """
         Фабричный метод.
         :return: в переопределённых будет возвращать объект фильма от нужной компании
