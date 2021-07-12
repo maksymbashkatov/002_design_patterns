@@ -1,8 +1,11 @@
+from threading import Lock
+
 class SingletonBase(type):
     """
     Базовый метакласс.
     """
     _instances = {} # Словарь для хранения единственного экземпляра класса.
+    _lock: Lock = Lock() # Создан объект блокировки.
 
     def __call__(cls, *args, **kwargs):
         """
@@ -10,8 +13,9 @@ class SingletonBase(type):
         если нет, то создаётся и помещается в словарь.
         :return: экземпляр класса
         """
-        if cls not in cls._instances:
-            cls._instances[cls] = super().__call__(*args, **kwargs)
+        with cls._lock: # вызов блокировки контекстным менеджером with
+            if cls not in cls._instances:
+                cls._instances[cls] = super().__call__(*args, **kwargs)
         return cls._instances[cls]
 
 class Moneybox(metaclass=SingletonBase):
@@ -40,11 +44,11 @@ class Moneybox(metaclass=SingletonBase):
         print(self.__amount_of_money)
 
 # tests
-# Создаётся 2 переменных для хранения ссылки на экземпляры класса Moneybox.
-moneybox1 = Moneybox() # Создан экземпляр класса Moneybox.
-moneybox2 = Moneybox() # Попытка создать ещё один экземпляр класса Moneybox.
+# Создаю 2 переменных для хранения ссылки на экземпляры класса Moneybox
+moneybox1 = Moneybox() # Создаю экземпляр класса Moneybox
+moneybox2 = Moneybox() # Попытка создать ещё один экземпляр класса Moneybox
 
-# Манипуляции доказывающие, что переменные хранят ссылку на один и тот же экземпляр класса.
+# Манипуляции доказывающие, что переменные хранят ссылку на один и тот же экземпляр класса
 moneybox1.put_money(100)
 moneybox1.get__amount_of_money()
 moneybox2.get__amount_of_money()
@@ -52,10 +56,10 @@ moneybox2.take_money(50)
 moneybox1.get__amount_of_money()
 moneybox2.get__amount_of_money()
 
-# Доказательство, что переменные хранят ссылку на один объект.
+# Доказательство, что переменные хранят ссылку на один объект
 print(moneybox1)
 print(moneybox2)
 
-# Доказательство, что переменные хранят ссылку на один объект путём показывания уникального идентификатора объекта.
+# Доказательство, что переменные хранят ссылку на один объект путём показывания уникального идентификатора объекта
 print(id(moneybox1))
 print(id(moneybox2))
