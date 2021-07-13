@@ -23,7 +23,7 @@ class Moneybox(metaclass=SingletonBase):
     Класс наследник от метакласса. Представляет копилку.
     """
     def __init__(self):
-        self.__amount_of_money = 0 # Количество денег.
+        self.__amount_of_money = 0.0 # Количество денег.
 
     def put_money(self, money: float):
         """
@@ -44,11 +44,11 @@ class Moneybox(metaclass=SingletonBase):
         print(self.__amount_of_money)
 
 # tests
-# Создаю 2 переменных для хранения ссылки на экземпляры класса Moneybox
-moneybox1 = Moneybox() # Создаю экземпляр класса Moneybox
-moneybox2 = Moneybox() # Попытка создать ещё один экземпляр класса Moneybox
+# Создаётся 2 переменных для хранения ссылки на экземпляры класса Moneybox.
+moneybox1 = Moneybox() # Создан экземпляр класса Moneybox.
+moneybox2 = Moneybox() # Попытка создать ещё один экземпляр класса Moneybox.
 
-# Манипуляции доказывающие, что переменные хранят ссылку на один и тот же экземпляр класса
+# Манипуляции доказывающие, что переменные хранят ссылку на один и тот же экземпляр класса.
 moneybox1.put_money(100)
 moneybox1.get__amount_of_money()
 moneybox2.get__amount_of_money()
@@ -56,10 +56,10 @@ moneybox2.take_money(50)
 moneybox1.get__amount_of_money()
 moneybox2.get__amount_of_money()
 
-# Доказательство, что переменные хранят ссылку на один объект
+# Доказательство, что переменные хранят ссылку на один объект.
 print(moneybox1)
 print(moneybox2)
 
-# Доказательство, что переменные хранят ссылку на один объект путём показывания уникального идентификатора объекта
+# Доказательство, что переменные хранят ссылку на один объект путём показывания уникального идентификатора объекта.
 print(id(moneybox1))
 print(id(moneybox2))
