@@ -8,16 +8,16 @@ class Smartphone(ABC):
     Прототип смартфона.
     """
     def __init__(self, name: str, screen_size: float, built_in_memory: int, ram: int):
-        self.name = name
-        self.screen_size = screen_size
-        self.built_in_memory = built_in_memory
-        self.ram = ram
+        self._name = name
+        self._screen_size = screen_size
+        self._built_in_memory = built_in_memory
+        self._ram = ram
 
     def __str__(self):
-        return f'name = {self.name}\n' \
-               f'screen_size = {self.screen_size}\n' \
-               f'built_in_memory = {self.built_in_memory}\n' \
-               f'ram = {self.ram}\n'
+        return f'name = {self._name}\n' \
+               f'screen_size = {self._screen_size}\n' \
+               f'built_in_memory = {self._built_in_memory}\n' \
+               f'ram = {self._ram}\n'
 
     @abstractmethod
     def clone(self):
@@ -36,24 +36,24 @@ class Smartphone(ABC):
         Изменяет параметры класса.
         """
         if name != None:
-            self.name = name
+            self._name = name
 
         if screen_size != None:
-            self.screen_size = screen_size
+            self._screen_size = screen_size
 
         if built_in_memory != None:
-            self.built_in_memory = built_in_memory
+            self._built_in_memory = built_in_memory
 
         if ram != None:
-            self.ram = ram
+            self._ram = ram
 
 class CheapLineSmartphone(Smartphone):
     def __init__(self, name: str, screen_size: float, built_in_memory: int, ram: int, button_smartphone: bool):
         super().__init__(name, screen_size, built_in_memory, ram)
-        self.button_smartphone = button_smartphone
+        self.__button_smartphone = button_smartphone
 
     def __str__(self):
-        return super(CheapLineSmartphone, self).__str__() + f'button_smartphone = {self.button_smartphone}\n'
+        return super(CheapLineSmartphone, self).__str__() + f'button_smartphone = {self.__button_smartphone}\n'
 
     def clone(self):
         return copy.deepcopy(self)
@@ -66,17 +66,18 @@ class CheapLineSmartphone(Smartphone):
                           button_smartphone=None):
         super(CheapLineSmartphone, self).change_parameters(name, screen_size, built_in_memory, ram)
         if built_in_memory != None:
-            self.button_smartphone = button_smartphone
+            self.__button_smartphone = button_smartphone
 
 class ExpensiveLineSmartphone(Smartphone):
     def __init__(self, name: str, screen_size: float, built_in_memory: int, ram: int, nfc: bool, fingerprint_on_screen: bool):
         super().__init__(name, screen_size, built_in_memory, ram)
-        self.nfc = nfc
-        self.fingerprint_on_screen = fingerprint_on_screen
+        self.__nfc = nfc
+        self.__fingerprint_on_screen = fingerprint_on_screen
 
     def __str__(self):
-        return super(ExpensiveLineSmartphone, self).__str__() + f'nfc = {self.nfc}\n' \
-                                                                f'fingerprint_on_screen = {self.fingerprint_on_screen}\n'
+        return super(ExpensiveLineSmartphone, self).__str__() + \
+               f'nfc = {self.__nfc}\n' \
+               f'fingerprint_on_screen = {self.__fingerprint_on_screen}\n'
 
     def clone(self):
         return copy.deepcopy(self)
@@ -90,10 +91,10 @@ class ExpensiveLineSmartphone(Smartphone):
                           fingerprint_on_screen=None):
         super(ExpensiveLineSmartphone, self).change_parameters(name, screen_size, built_in_memory, ram)
         if nfc != None:
-            self.nfc = nfc
+            self.__nfc = nfc
 
         if fingerprint_on_screen != None:
-            self.fingerprint_on_screen = fingerprint_on_screen
+            self.__fingerprint_on_screen = fingerprint_on_screen
 
 # tests
 # Список для смартфонов

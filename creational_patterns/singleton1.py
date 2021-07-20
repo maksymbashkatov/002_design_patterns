@@ -1,22 +1,21 @@
-class SingletonBase(type):
+class MetaSingleton(type):
     """
-    Базовый метакласс.
+    Метакласс, который определить действия при создании экземпляров для своих наследников.
     """
-    _instances = {} # Словарь для хранения единственного экземпляра класса.
+    __instance = None
 
-    def __call__(cls, *args, **kwargs):
+    def __call__(cls):
         """
-        Если экземпляр класса существует, то он возвращается,
-        если нет, то создаётся и помещается в словарь.
+        Если экземпляр класса существует, то возвращаем его, иначе создаём его.
         :return: экземпляр класса
         """
-        if cls not in cls._instances:
-            cls._instances[cls] = super().__call__(*args, **kwargs)
-        return cls._instances[cls]
+        if cls.__instance is None:
+            cls.__instance = super(MetaSingleton, cls).__call__()
+        return cls.__instance
 
-class Moneybox(metaclass=SingletonBase):
+class Moneybox(metaclass=MetaSingleton):
     """
-    Класс наследник от метакласса. Представляет копилку.
+    Класс который делегирует поведение создание экземпляров метаклассу.
     """
     def __init__(self):
         self.__amount_of_money = 0 # Количество денег.
@@ -48,7 +47,7 @@ moneybox2 = Moneybox() # Попытка создать ещё один экзе�
 moneybox1.put_money(100)
 moneybox1.get__amount_of_money()
 moneybox2.get__amount_of_money()
-moneybox2.take_money(50)
+moneybox2.take_money(50.45)
 moneybox1.get__amount_of_money()
 moneybox2.get__amount_of_money()
 

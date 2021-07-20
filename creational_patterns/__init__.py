@@ -1,1 +1,3 @@
-# Creational Patterns - Порождающие паттерны
+"""
+Creational Patterns - Порождающие паттерны
+"""

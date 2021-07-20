@@ -1,1 +1,3 @@
-# Structural Patterns - Структурные паттерны
+"""
+Structural Patterns - Структурные паттерны
+"""
