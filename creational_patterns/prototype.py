@@ -80,6 +80,7 @@ class ExpensiveLineSmartphone(Smartphone):
                f'fingerprint_on_screen = {self.__fingerprint_on_screen}\n'
 
     def clone(self):
+        # return self
         return copy.deepcopy(self)
 
     def change_parameters(self,
@@ -127,3 +128,5 @@ smartphone_list.append(expensive_smartphone2)
 
 for smartphone in smartphone_list:
     print(smartphone)
+
+print(expensive_smartphone1 is expensive_smartphone2)
