@@ -49,5 +49,6 @@ class TesterHandler(ResponsibilityHandler):
 programmer = ProgrammerHandler()
 tester = TesterHandler()
 
-programmer.set_next(tester)
+programmer.set_next(tester)#.set_next(programmer)
 print(programmer.handle_responsibility(Responsibility.FIND_BUG))
+# print(tester.handle_responsibility(Responsibility.WRITE_CODE))
