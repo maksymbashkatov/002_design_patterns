@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 class Iterator(ABC):
     @abstractmethod
-    def next(self) -> list:
+    def next(self):
         pass
 
     @abstractmethod
@@ -17,8 +17,8 @@ class IterableCollection(ABC):
 class Roulette(IterableCollection):
     def __init__(self):
         print('Which parity of number do you choose?')
-        self.player_choice = input('Enter even or odd to pick: ')
-        if self.player_choice == 'even':
+        self.__player_choice = input('Enter even or odd to pick: ')
+        if self.__player_choice == 'even':
             self.__roulette_numbers = [number for number in range(2, 37) if number % 2 == 0]
         else:
             self.__roulette_numbers = [number for number in range(1, 36) if number % 2 != 0]
