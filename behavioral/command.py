@@ -64,6 +64,18 @@ class Manager:
         for command in self.__list_of_commands:
             command.execute()
 
+    def stop_work(self):
+        """
+        Очищает историю выполнения команд.
+        """
+        self.__list_of_commands.clear()
+
+    def cancel_command(self):
+        """
+        Операция отмены (последней команды из стека).
+        """
+        self.__list_of_commands.pop()
+
 # tests
 programmer = Programmer()
 tester = Tester()
@@ -71,4 +83,13 @@ manager = Manager()
 manager.add_commands(WriteCodeCommand(programmer),
                      FindBugCommand(tester),
                      FixBugCommand(programmer))
+# manager.cancel_command()
 manager.start_work()
+manager.stop_work()
+
+# manager.add_commands(WriteCodeCommand(programmer),
+#                      FindBugCommand(tester),
+#                      WriteCodeCommand(programmer),
+#                      FindBugCommand(tester),
+#                      FixBugCommand(programmer))
+# manager.start_work()
