@@ -2,13 +2,16 @@ class Memento:
     """
     Фиксирует текущее состояние.
     """
-    def __init__(self, state):
+    def __init__(self, state: list[str]):
         self.__state = state
 
-    def get_state(self):
+    def get_state(self) -> list[str]:
         return self.__state
 
 class Coffee:
+    """
+    Создатель, имеет полный доступ к снимку.
+    """
     def __init__(self):
         self.__list_of_ingredients: list[str] = []
 
@@ -20,7 +23,8 @@ class Coffee:
         """
         Сохраняет состояние.
         """
-        return Memento(self.__list_of_ingredients)
+        # return Memento(self.__list_of_ingredients)
+        return Memento(self.__list_of_ingredients[:])
 
     def restore(self, memento: Memento):
         """
@@ -32,6 +36,9 @@ class Coffee:
         return f"Текущее состояние кофе: {self.__list_of_ingredients}"
 
 class Barista:
+    """
+    Опекун, имеет доступ к снимку через создателя.
+    """
     def __init__(self, coffee: Coffee):
         self.__coffee = coffee
         self.__coffee_states: list[Memento] = []
@@ -41,6 +48,8 @@ class Barista:
         self.__coffee_states.append(self.__coffee.save())
         # В список ингредиентов добавляется новый ингредиент.
         self.__coffee.add_ingredient(ingredient)
+        # for memento in self.__coffee_states:
+        #     print(f'--- {memento.get_state()}')
 
     def undo_add_ingredient(self):
         """
@@ -49,6 +58,7 @@ class Barista:
         if len(self.__coffee_states) == 0:
             print('В кружке нет ингредиентов.')
         else:
+            # Удаляется последнее состояние из списка состояний.
             self.__coffee.restore(self.__coffee_states.pop())
             print('Предыдущий ингредиент удалён.')
 
