@@ -1,6 +1,7 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
 
+
 class Role(ABC):
     __name: str
 
@@ -12,8 +13,12 @@ class Role(ABC):
         self.__name = name
 
     @abstractmethod
-    def update(self, chat: Chat):
+    def inform(self, chat: Chat):
+        """
+        Информирование участника чата о нынешнем состоянии чата.
+        """
         pass
+
 
 class Chat:
     _roles: list[Role] = []
@@ -33,19 +38,21 @@ class Chat:
         self._roles.remove(role)
         Chat.__roles_amount -= 1
 
-    def inform(self):
+    def informing_users(self):
         print('--- Информирование всех пользователей чата. ---')
         for role in self._roles:
-            role.update(self)
+            role.inform(self)
 
 
 class Moderator(Role):
-    def update(self, chat: Chat):
+    def inform(self, chat: Chat):
         print(f'Добрый день модератор {self.name}, нас {chat.roles_amount} в чате.')
 
+
 class User(Role):
-    def update(self, chat: Chat):
+    def inform(self, chat: Chat):
         print(f'Добрый день пользователь {self.name}, нас {chat.roles_amount} в чате.')
+
 
 chat1 = Chat()
 role1 = Moderator('Moderator1')
@@ -57,7 +64,7 @@ chat1.join(role2)
 role3 = User('User2')
 chat1.join(role3)
 
-chat1.inform()
+chat1.informing_users()
 
 chat1.leave(role2)
-chat1.inform()
+chat1.informing_users()
