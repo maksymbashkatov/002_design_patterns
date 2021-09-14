@@ -1,5 +1,5 @@
 from __future__ import annotations
-from abc import ABC
+from abc import ABC, abstractmethod
 
 
 class Product:
@@ -29,9 +29,11 @@ class Product:
 
 
 class State(ABC):
+    @abstractmethod
     def buy(self):
         pass
 
+    @abstractmethod
     def to_order(self):
         pass
 
