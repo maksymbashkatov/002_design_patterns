@@ -4,7 +4,6 @@ from abc import ABC, abstractmethod
 
 class Car(ABC):
     __engine: Engine
-    _max_power: int = 0
 
     def __init__(self, engine):
         self.__engine = engine
@@ -15,18 +14,22 @@ class Car(ABC):
     def power_down(self, down):
         self.__engine.power -= down
 
+    @abstractmethod
     def info(self):
         print(f'Его мощность: {self.__engine.power}.\n')
+
 
 class ElectroCar(Car):
     def info(self):
         print('Это электрокар.')
         super().info()
 
+
 class PetrolCar(Car):
     def info(self):
         print('Это обычный автомобиль.')
         super().info()
+
 
 class Engine:
     __power: int = 0
