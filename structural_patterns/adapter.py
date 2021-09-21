@@ -12,6 +12,7 @@ class Car(ABC):
     def get_speed(self) -> float:
         pass
 
+
 class CarMiles(ABC):
     """
     Нестандартный автомобиль со скоростью в милях.
@@ -24,14 +25,18 @@ class CarMiles(ABC):
     def get_miles_speed(self) -> float:
         pass
 
+
 class CarAdapterSpeed(Car, CarMiles):
     """
     Адаптивный класс наследуемый от стандартного интефейса, который работает с клиентским кодом,
-    а также от нестантартного интефеса с которым не работает клиентский код.
+    а также от нестантартного интерфейса с которым не работает клиентский код.
     """
+    __speed: float
+    __miles_speed: float
+
     def set_speed(self, speed: float):
         self.set_miles_speed(speed)
-        self.__speed = round(self.__miles_speed / 1.60934, 2)
+        self.__speed = round(self.__miles_speed * 1.60934, 2)
 
     def get_speed(self) -> float:
         return self.__speed
@@ -41,6 +46,7 @@ class CarAdapterSpeed(Car, CarMiles):
 
     def get_miles_speed(self) -> float:
         return self.__miles_speed
+
 
 class EuropeCar(Car):
     """
@@ -52,7 +58,8 @@ class EuropeCar(Car):
     def get_speed(self):
         return self.__speed
 
-#tests
+
+# tests
 def print_kilometres_speed(car: Car):
     print(f'Скорость авто {car.get_speed()} км/ч')
 
@@ -61,6 +68,5 @@ car1.set_speed(180)
 print_kilometres_speed(car1)
 
 car2 = CarAdapterSpeed()
-car2.set_speed(250)
+car2.set_speed(180) # На вход получаю мили, но адаптер адаптирует их в километры
 print_kilometres_speed(car2)
-print(f'Скорость авто {car2.get_miles_speed()} миль/ч')
