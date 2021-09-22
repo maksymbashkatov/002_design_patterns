@@ -6,11 +6,11 @@ class Programmer:
         print('Программист пишет код.')
 
     def fix_bug(self):
-        print('Программист исправляет баг.')
+        print('Программист исправляет баг.\n')
 
 
 class Tester:
-    __bug_found: bool
+    __bug_found = True
 
     def find_bug(self):
         """
@@ -18,27 +18,28 @@ class Tester:
         Так происходит пока находится баг. Перед новой проверкой код предположительно исправный
         с __bug_found False.
         """
-        self.__bug_found = False
         print('Тестер ищет баг.')
-        true_or_false = [True, False, True]
-        if choice(true_or_false):
-            self.__bug_found = True
+        true_or_false = [True, False]
+        self.__bug_found = choice(true_or_false)
 
     def bug_found(self):
         return self.__bug_found
 
 
 class WriteCodeFacade:
-    def __init__(self, programmer: Programmer(), tester: Tester()):
+    def __init__(self, programmer: Programmer, tester: Tester):
         self.__programmer = programmer
         self.__tester = tester
 
     def work_with_code(self):
-        self.__programmer.write_code()
-        self.__tester.find_bug()
         while self.__tester.bug_found():
             self.__programmer.write_code()
             self.__tester.find_bug()
+            if self.__tester.bug_found():
+                self.__programmer.fix_bug()
+            else:
+                print('Баги не найдены.\n')
+                break
 
 
 # tests
